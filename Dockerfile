@@ -1,8 +1,19 @@
 FROM node:14-alpine
 
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+
+COPY rollup.config.js ./
+COPY package*.json ./
+
 RUN npm install
-COPY . .
+
+COPY ./src ./src
+COPY ./public ./public
+
+RUN npm run-script build
+
 EXPOSE 5000
-CMD ["npm", "start"]
+
+ENV HOST=0.0.0.0
+
+CMD [ "npm", "start" ]
