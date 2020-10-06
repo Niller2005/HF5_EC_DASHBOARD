@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY rollup.config.js ./
 COPY package*.json ./
 
-RUN npm install sirv-cli
+RUN npm install http-server
 
 COPY ./src ./src
 COPY ./public ./public
@@ -14,4 +14,4 @@ EXPOSE 5000
 
 ENV HOST=0.0.0.0
 
-CMD [ "npm", "start" ]
+CMD [ "http-server", "./public", "-p 5000" ]
