@@ -1,7 +1,3 @@
-<script lang="ts">
-  import { devices } from "../stores";
-</script>
-
 <style>
   main {
     display: grid;
@@ -10,11 +6,15 @@
   }
 </style>
 
+<script lang="ts">
+  import { devices } from '../stores';
+</script>
+
 <main>
   {#await $devices}
     <p>...waiting</p>
   {:then devices}
-    {#each devices as { id, mac, status }, i}
+    {#each devices as { id, mac, status, temp }, i}
       <div class="box">
         <article class="media">
           <div class="media-content">
@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="media-right">
-            <h1 class="title is-1">40 °C</h1>
+            <h1 class="title is-1">{temp} °C</h1>
           </div>
         </article>
       </div>
