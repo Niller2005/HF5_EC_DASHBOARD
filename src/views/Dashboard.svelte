@@ -40,7 +40,13 @@
             </div>
           </div>
           <div class="media-right">
-            <h1 class="title is-1">{temp} °C</h1>
+            {#if compareTime(updatedAt) > 10000}
+            <h1 class="title is-1">-- °C</h1>
+            {:else if status === 'Online'}
+                  <h1 class="title is-1">{temp} °C</h1>
+                  {:else}
+                  <h1 class="title is-1">-- °C</h1>
+                {/if}
           </div>
         </article>
       </div>
