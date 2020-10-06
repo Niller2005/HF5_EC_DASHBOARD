@@ -8,13 +8,20 @@
 
 <script lang="ts">
   import { devices } from '../stores';
+
+  const compareTime = (updateTime) => {
+    const d1 = new Date(updateTime);
+    const d2 = new Date();
+    const timeDiff = d2.getTime() - d1.getTime();
+    return timeDiff;
+  }
 </script>
 
 <main>
   {#await $devices}
     <p>...waiting</p>
   {:then devices}
-    {#each devices as { id, mac, status, temp }, i}
+    {#each devices as { id, mac, status, temp, updatedAt }, i}
       <div class="box">
         <article class="media">
           <div class="media-content">
@@ -22,9 +29,13 @@
               <p>
                 <strong>{mac}</strong>
                 <br />
-                {#if status === 'Online'}
+                {#if compareTime(updatedAt) > 10000}
+                <span class="tag is-danger">Offline</span>
+                {:else if status === 'Online'}
                   <span class="tag is-success">{status}</span>
-                {:else}<span class="tag is-danger">{status}</span>{/if}
+                {:else}
+                <span class="tag is-danger">{status}</span>
+                {/if}
               </p>
             </div>
           </div>
