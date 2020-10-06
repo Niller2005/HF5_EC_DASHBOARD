@@ -1,26 +1,12 @@
 <script lang="ts">
-  import { devices } from '../stores';
+  import { devices } from "../stores";
 </script>
 
 <style>
   main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
   }
 </style>
 
@@ -28,7 +14,26 @@
   {#await $devices}
     <p>...waiting</p>
   {:then devices}
-    <p>{JSON.stringify(devices)}</p>
+    {#each devices as { id, mac, status }, i}
+      <div class="box">
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <strong>{mac}</strong>
+                <br />
+                {#if status === 'Online'}
+                  <span class="tag is-success">{status}</span>
+                {:else}<span class="tag is-danger">{status}</span>{/if}
+              </p>
+            </div>
+          </div>
+          <div class="media-right">
+            <h1 class="title is-1">40 °C</h1>
+          </div>
+        </article>
+      </div>
+    {/each}
   {:catch error}
     <p style="color: red">{error.message}</p>
   {/await}
