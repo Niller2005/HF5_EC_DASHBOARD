@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY rollup.config.js ./
 COPY package*.json ./
 
-RUN npm install
+RUN npm install sirv-cli
 
 COPY ./src ./src
 COPY ./public ./public
