@@ -1,16 +1,14 @@
-import { writable } from 'svelte/store';
-import API from './services/api';
+import { deviceService } from './services/feather';
+import { readable, writable } from 'svelte/store';
 
-const requestDevices = async () => {
-  try {
-    const response = await API.get('/devices', '');
-    return response.results;
-  } catch (error) {
-    console.error(error);
-  }
+const initDevices = async () => {
+  const res = await deviceService.find();
+  return res;
 };
 
-console.log(requestDevices());
+console.log(initDevices());
 
 export const name = writable('world');
-export const devices = writable(requestDevices());
+export const devices = readable(initDevices(), function start(set) {
+  deviceService.on('created', () => set(initDevices()));
+});

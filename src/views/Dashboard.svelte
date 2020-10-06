@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { name, devices } from '../stores';
+  import { devices } from '../stores';
 </script>
 
 <style>
@@ -25,11 +25,11 @@
 </style>
 
 <main>
-  <h1>Hello {$name}!</h1>
-  <pre>{$devices}</pre>
-  <p>
-    Visit the
-    <a href="https://svelte.dev/tutorial">Svelte tutorial</a>
-    to learn how to build Svelte apps.
-  </p>
+  {#await $devices}
+    <p>...waiting</p>
+  {:then devices}
+    <p>{JSON.stringify(devices)}</p>
+  {:catch error}
+    <p style="color: red">{error.message}</p>
+  {/await}
 </main>
