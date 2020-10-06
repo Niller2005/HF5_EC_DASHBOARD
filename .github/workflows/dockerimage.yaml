@@ -27,7 +27,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: niller2005/hf5ecapi:latest
+          tags: niller2005/hf5ecdashboard:latest
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
